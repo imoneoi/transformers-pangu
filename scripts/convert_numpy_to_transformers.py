@@ -68,6 +68,7 @@ def convert_numpy_to_transformers(
         load_to(dst_prefix + "ln_2.weight", src_prefix + "layernorm2.gamma")
         load_to(dst_prefix + "ln_2.bias", src_prefix + "layernorm2.beta")
         # attention
+        # Attention QKV layers use nn.Dense, same format as PyTorch
         load_to(dst_prefix + "attn.q_proj.weight", src_prefix + "attention.dense1.weight", transpose=False)
         load_to(dst_prefix + "attn.q_proj.bias", src_prefix + "attention.dense1.bias")
 
@@ -77,10 +78,12 @@ def convert_numpy_to_transformers(
         load_to(dst_prefix + "attn.v_proj.weight", src_prefix + "attention.dense3.weight", transpose=False)
         load_to(dst_prefix + "attn.v_proj.bias", src_prefix + "attention.dense3.bias")
 
+        # Projection layers use Mapping, require transposition
         load_to(dst_prefix + "attn.out_proj.weight", src_prefix + "attention.projection.weight", transpose=True)
         load_to(dst_prefix + "attn.out_proj.bias", src_prefix + "attention.projection.bias")
 
         # mlp
+        # MLP layers use Output (Mapping and Mapping_output inside), require transposition
         load_to(dst_prefix + "mlp.c_proj.weight", src_prefix + "output.projection.weight", transpose=True)
         load_to(dst_prefix + "mlp.c_proj.bias", src_prefix + "output.projection.bias")
 
