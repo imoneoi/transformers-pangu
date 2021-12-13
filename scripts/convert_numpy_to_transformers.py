@@ -79,16 +79,16 @@ def convert_numpy_to_transformers(
         load_to(dst_prefix + "attn.v_proj.bias", src_prefix + "attention.dense3.bias")
 
         # Projection layers use Mapping, require transposition
-        load_to(dst_prefix + "attn.out_proj.weight", src_prefix + "attention.projection.weight", transpose=True)
-        load_to(dst_prefix + "attn.out_proj.bias", src_prefix + "attention.projection.bias")
+        load_to(dst_prefix + "attn.c_proj.weight", src_prefix + "attention.projection.weight", transpose=True)
+        load_to(dst_prefix + "attn.c_proj.bias", src_prefix + "attention.projection.bias")
 
         # mlp
         # MLP layers use Output (Mapping and Mapping_output inside), require transposition
-        load_to(dst_prefix + "mlp.c_proj.weight", src_prefix + "output.projection.weight", transpose=True)
-        load_to(dst_prefix + "mlp.c_proj.bias", src_prefix + "output.projection.bias")
-
         load_to(dst_prefix + "mlp.c_fc.weight", src_prefix + "output.mapping.weight", transpose=True)
         load_to(dst_prefix + "mlp.c_fc.bias", src_prefix + "output.mapping.bias")
+
+        load_to(dst_prefix + "mlp.c_proj.weight", src_prefix + "output.projection.weight", transpose=True)
+        load_to(dst_prefix + "mlp.c_proj.bias", src_prefix + "output.projection.bias")
 
     load_to("transformer.ln_f.weight", "backbone.layernorm.gamma")
     load_to("transformer.ln_f.bias", "backbone.layernorm.beta")
