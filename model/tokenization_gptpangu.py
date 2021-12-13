@@ -6,14 +6,23 @@ import jieba
 
 class GPTPanguTokenizer(PreTrainedTokenizer):
     # Ref: https://git.openi.org.cn/PCL-Platform.Intelligence/PanGu-Alpha/src/branch/master/tokenization_jieba.py
+    vocab_files_names = {
+        "model_file": "vocab.model"
+    }
+
     def __init__(
             self,
-            model_file=None
+            model_file,
+            **kwargs
     ):
         super().__init__()
 
-        self.sp = sentencepiece.SentencePieceProcessor(model_file=model_file)
+        self.sp = sentencepiece.SentencePieceProcessor()
+        self.sp.Load(model_file=model_file)
         self.translator = str.maketrans(" \n", "\u2582\u2583")
+
+        # special token ids
+        self.eos_token_id = self.sp.piece_to_id("<eot>")
 
     def tokenize(self, text, **kwargs):
         """ Tokenize a string. """

@@ -102,11 +102,12 @@ def convert_numpy_to_transformers(
     print("Dest not loaded fields: {}".format([k for k in dst_state_dict.keys() if k not in dst_loaded_keys]))
 
     # Test inference
+    model.eval()
     with torch.no_grad():
-        prompt = "问：中国的首都是哪里？\n答："
+        prompt = "中国和美国和日本和法国和加拿大和澳大利亚的首都分别是哪里？"
         input_ids = tokenizer.encode(prompt, return_tensors="pt")
-        output = [tokenizer.decode(model.generate(input_ids, max_length=20, top_p=0.9, do_sample=True, top_k=0)[0].numpy().tolist())
-                  for _ in range(5)]
+        output = [tokenizer.decode(model.generate(input_ids, max_length=200)[0].numpy().tolist())
+                  for _ in range(1)]
         print(output)
 
     # Save model

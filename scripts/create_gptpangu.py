@@ -1,12 +1,8 @@
-from model.modeling_gptpangu import GPTPanguForCausalLM
-from model.configuration_gptpangu import GPTPanguConfig
-from model.tokenization_gptpangu import GPTPanguTokenizer
+import transformers
 
 
 if __name__ == "__main__":
-    tokenizer = GPTPanguTokenizer("../data/vocab/vocab.model")
-
-    config = GPTPanguConfig()
-    model = GPTPanguForCausalLM(config)
+    tokenizer = transformers.AutoTokenizer.from_pretrained("../data/transformers", trust_remote_code=True)
+    model = transformers.AutoModelForCausalLM.from_pretrained("../data/transformers", trust_remote_code=True)
 
     print(model)
