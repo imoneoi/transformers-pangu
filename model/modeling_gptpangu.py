@@ -1,5 +1,5 @@
 """PyTorch PanguAlpha GPT2 Model"""
-from .configuration_gptpangu import GPTPanguConfig
+# from .configuration_gptpangu import GPTPanguConfig
 
 from typing import Tuple
 import math
@@ -207,7 +207,7 @@ class GPTPanguPreTrainedModel(PreTrainedModel):
     models.
     """
 
-    config_class = GPTPanguConfig
+    # config_class = GPTPanguConfig
     base_model_prefix = "transformer"
     supports_gradient_checkpointing = True
 
