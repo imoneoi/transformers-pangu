@@ -1,5 +1,6 @@
 from transformers.tokenization_utils import PreTrainedTokenizer
 
+import torch
 import sentencepiece
 import jieba
 
@@ -37,6 +38,9 @@ class GPTPanguTokenizer(PreTrainedTokenizer):
         return self.decode(ids)
 
     def decode(self, tokens, **kwargs):
+        if isinstance(tokens, torch.Tensor):
+            tokens = tokens.tolist()
+
         text = self.sp.decode(tokens)
         text = text.replace(' ', '').replace('\u2582', ' ').replace('\u2583', '\n')
         return text
