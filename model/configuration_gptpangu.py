@@ -18,6 +18,7 @@ class GPTPanguConfig(PretrainedConfig):
         embd_pdrop=0.1,
         attn_pdrop=0.1,
         layer_norm_epsilon=1e-5,
+        scale_attn_weights=True,
         initializer_range=0.02,
         summary_type="cls_index",
         summary_use_proj=True,
@@ -40,6 +41,7 @@ class GPTPanguConfig(PretrainedConfig):
         self.embd_pdrop = embd_pdrop
         self.attn_pdrop = attn_pdrop
         self.layer_norm_epsilon = layer_norm_epsilon
+        self.scale_attn_weights = scale_attn_weights
         self.initializer_range = initializer_range
         self.summary_type = summary_type
         self.summary_use_proj = summary_use_proj
